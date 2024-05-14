@@ -3,11 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+
+    public function home(Request $request)
+    {
+        $categories = Category::has('products')->get();
+        $products = Product::with('category')
+            ->whereHas('category')
+            ->where('stock', '>', 0)
+            ->get();
+        if (!$request->ajax()) return view('index', compact('products', 'categories'));
+        return response()->json(['products' => $products], 200);
+    }
 
     public function index(Request $request)
     {

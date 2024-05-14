@@ -16,7 +16,7 @@ class CategoryRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'name' => ['required', 'string','unique'],
+            'name' => ['required', 'string'],
         ];
         return $rules;
     }
@@ -25,7 +25,6 @@ class CategoryRequest extends FormRequest
         return [
             'name.required' => 'El nombre es requerido',
             'name.string' => 'El nombre debe ser valido',
-            'name.unique' => 'La categoria ya existe'
         ];
     }
 }
