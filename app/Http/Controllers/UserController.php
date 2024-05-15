@@ -11,10 +11,9 @@ class UserController extends Controller
     
     public function index(Request $request)
     {
-        // $users = User::with('roles')->get();
-        $users = User::get();
-        if(!$request->ajax()) return view();
-        return response()->json(['users' => $users],200);
+        $users = User::with('roles')->get();
+        if(!$request->ajax()) return view('users.index',compact('users'));
+        return response()->json(['users' => $users],200); //view
     }
 
     

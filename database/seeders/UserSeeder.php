@@ -22,6 +22,7 @@ class UserSeeder extends Seeder
             'password' => 'samuel123',
             'remember_token' => Str::random(10),
         ]);
+        $user->assignRole('admin');
         $user->save();
     }
 }
