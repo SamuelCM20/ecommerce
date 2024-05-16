@@ -29,7 +29,7 @@
     "dependencies": {
         "jszip": "^3.10.1",
         "pdfmake": "^0.2.10",
-        "vee-validate": "^4.12.6",
+        "vee-validate": "^4.12.8",
         "yup": "^1.4.0"
     }
 }

@@ -39,9 +39,9 @@
                             {{ Auth::user()->name }}
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="">Perfil</a></li>
+                            <li><a class="dropdown-item" href="{{route('users.profile')}}">Perfil</a></li>
                             @role('admin')
-                            <li><a class="dropdown-item" href="">Usuarios</a></li>
+                            <li><a class="dropdown-item" href="{{route('users.index')}}">Usuarios</a></li>
                             <li><a class="dropdown-item" href="#">Productos</a></li>
                             <li><a class="dropdown-item" href="#">Categorias</a></li>
                             @endrole
@@ -60,7 +60,7 @@
                     </li>
                 @endguest
 
-                    
+               
                 <li class="nav-item" title="cart">
                     <a class="nav-link" href="">
                         <i class="fa-solid fa-cart-shopping fs-4"></i></a>
@@ -74,6 +74,7 @@
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
+           
             </div>
 		@endif
     </div>

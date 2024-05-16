@@ -29,12 +29,6 @@ class ProductController extends Controller
     }
 
 
-    public function create()
-    {
-        //
-    }
-
-
     public function store(ProductRequest $request)
     {
         $product = new Product($request->all());
@@ -49,6 +43,12 @@ class ProductController extends Controller
         if (!$request->ajax()) return view();
         return response()->json(['product' => $product], 200);
     }
+
+    public function info(Product $product)
+    {
+        return view('products.info', compact('product'));
+    }
+
 
 
     public function edit($id)

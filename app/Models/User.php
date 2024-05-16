@@ -35,6 +35,10 @@ class User extends Authenticatable
         'created_at' => 'datetime:Y-m-d',
         'updated_at' => 'datetime:Y-m-d',
     ];
+    
+    public function getFullNameAttribute(){
+        return "{$this->name} {$this->last_name}";
+    }
 
 
     //crear un mutador

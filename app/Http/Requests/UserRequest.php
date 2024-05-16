@@ -32,9 +32,9 @@ class UserRequest extends FormRequest
             $rules['password'] = ['nullable', 'confirmed', 'string', 'min:8'];
         }
 
-        // if($this->path() != 'api/register'){
-        //      $rules['role'] = ['required', 'string','in:user,admin,librarian'];
-        // }
+        if($this->path() != 'api/register'){
+             $rules['role'] = ['required', 'string','in:user,admin'];
+        }
         return $rules;
     }
 
@@ -59,6 +59,9 @@ class UserRequest extends FormRequest
             'password.confirmed' => 'Las contraseñas no coinciden',
             'password.string' => 'La contraseña debe ser valida',
             'password.min' => 'La contraseña debe tener al menos 8 caracteres',
+            'role.required' => 'El rol es requerido',
+            'role.string' => 'El rol debe ser valido',
+            'role.in' => 'El rol debe ser user o admin',
         ];
     }
 }

@@ -13,7 +13,7 @@
                         @php
                             $count++;
                         @endphp
-                        <a href="" class="text-decoration-none text-reset">
+                        <a href="{{route('products.info',$product->id)}}" class="text-decoration-none text-reset">
                             <div class="card mx-2" style="width: 15rem;">
                                 <img src="..." class="card-img-top" alt="...">
                                 <div class="card-body">
