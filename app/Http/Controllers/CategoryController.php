@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -12,8 +13,13 @@ class CategoryController extends Controller
     public function index(Request $request)
     {
         $categories = Category::get();
-        if(!$request->ajax()) return view();
+        if(!$request->ajax()) return view('categories.index',compact('categories'));
         return response()->json(['categories' => $categories],200);
+    }
+    public function allProducts(Request $request,Category $category)
+    {
+        $products = Product::where('category_id',$category->id)->get();
+        return view('categories.all',compact('category','products'));
     }
    
     public function store(CategoryRequest $request)

@@ -59,11 +59,10 @@ class UserController extends Controller
             if (!$request->filled('password')) {
                 unset($data['password'], $data['password_confirmation']);
             }
-            if (!$request->filled('file')) {
-                unset($data['file']);
-            }
             $user->update($data);
-            $this->uploadFile($user, $request);
+            if ($request->hasFile('file')) {
+                $this->uploadFile($user, $request);
+            }
             $user->syncRoles([$request->role]);
             DB::commit();
             if (!$request->ajax()) return back()->with("success", 'User updated');

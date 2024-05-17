@@ -29,17 +29,15 @@ Route::group(['prefix' => 'users','middleware' =>['role:admin'],'controller'=>Us
 
 Route::group(['prefix' => 'products','controller'=>ProductController::class], function () {
 	Route::get('/','index')->name('products.index')->middleware('can:products.index');	
-	Route::post('/', 'store')->name('products.store')->middleware('can:products.store');
-	Route::get('/{product}/edit', 'edit')->name('products.edit')->middleware('can:products.edit');
-	Route::put('/{product}', 'update')->name('products.update')->middleware('can:products.update');
+	Route::post('/store', 'store')->name('products.store')->middleware('can:products.store');
+	Route::post('/update/{product}', 'update')->name('products.update')->middleware('can:products.update');
 	Route::delete('/{product}', 'destroy')->name('products.destroy')->middleware('can:products.destroy');
 });
 
 Route::group(['prefix' => 'categories','controller'=>CategoryController::class], function () {
 	Route::get('/','index')->name('categories.index')->middleware('can:categories.index');
-	Route::get('/create', 'create')->name('categories.create')->middleware('can:categories.create');
+	Route::get('/allProducts/{category}','allProducts')->name('categories.allProducts');
 	Route::post('/', 'store')->name('categories.store')->middleware('can:categories.store');
-	Route::get('/{category}/edit', 'edit')->name('categories.edit')->middleware('can:categories.edit');
 	Route::put('/{category}', 'update')->name('categories.update')->middleware('can:categories.update');
 	Route::delete('/{category}', 'destroy')->name('categories.destroy')->middleware('can:categories.destroy');
 });

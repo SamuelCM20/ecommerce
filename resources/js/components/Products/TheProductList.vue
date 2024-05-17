@@ -5,36 +5,32 @@
 		</div>
 		<div class="card-body">
 			<div class="table-responsive my-4 mx-2">
-				<table class="table table-bordered text-aling-center" id="user_table">
+				<table class="table table-bordered text-aling-center" id="product_table">
 					<thead>
 						<tr>
-							<th>Avatar</th>
-							<th>Cedula</th>
+							<th>Imagen</th>
 							<th>Nombre</th>
-							<th>Apellido</th>
-							<th>Correo</th>
-							<th>Rol</th>
+							<th>detalles</th>
+							<th>Precio</th>
+							<th>Cantidad</th>
+							<th>Categoria</th>
 							<th>Acciones</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr v-for="(user, index) in users" :key="index">
-							<td class="d-flex justify-content-center"><img :src ="user.file.route" alt="avatar de usuario" width="80"  height="80"></td>
-							<td>{{user.number_id}}</td>
-							<td>{{user.name}}</td>
-							<td>{{user.last_name}}</td>
-							<td>{{user.email}}</td>
-							<td>
-								<span v-for="(role, roleIndex) in user.roles" :key="roleIndex">
-									{{ role.name }}
-								</span>
-							</td>
+						<tr v-for="(product, index) in products" :key="index">
+							<td class="d-flex justify-content-center"><img :src ="product.file.route" alt="imagen del producto" width="80"></td>
+							<td>{{product.name}}</td>
+							<td>{{product.details}}</td>
+							<td>{{product.price}}</td>
+							<td>{{product.stock}}</td>
+							<td>{{product.category.name}}</td>
 							<td>
 								<div class="d-flex justify-content-center" title="Editar">
 
-									<button type="button" class="btn btn-warning btn-sm" @click="editUser(user)">
+									<button type="button" class="btn btn-warning btn-sm" @click="editProduct(product)">
 										<i class="fa-solid fa-pen"></i></button>
-									<button type="button" class="btn btn-danger btn-sm ms-2" title="Eliminar" @click="deleteUser(user)" ><i class="fa-solid fa-trash"></i></button>
+									<button type="button" class="btn btn-danger btn-sm ms-2" @click="deleteProduct(product)" title="Eliminar" ><i class="fa-solid fa-trash"></i></button>
 								</div>
 
 							</td>							
@@ -45,26 +41,26 @@
 		</div>
 	</div>
 	<div>
-		<user-modal ref="user_modal" :roles_data="roles_data" :user_data = "user"/>
+		<product-modal ref="product_modal" :category_data = "category_data" :product_data = "product"/>
 	</div>
 </template>
 
 
 <script>
 import { successMessage } from '../../helpers/Alert';
-import UserModal from './UserModal.vue';
+import ProductModal from './ProductModal.vue';
 import { deleteMessage  } from '@/helpers/Alert.js'
 
 
 export default {
 	components: {
-		UserModal
+		ProductModal
 	},
-	props: ['users', 'roles_data'],
+	props: ['products', 'category_data'],
 	data() {
 		return {
 			modal: null,
-			user: {}
+			product: {}
 		}
 	},
 	mounted() {
@@ -72,21 +68,21 @@ export default {
 	},
 	methods: {
 		async index() {
-			$('#user_table').DataTable()
-			const modal_id = document.getElementById('user_modal')
+			$('#product_table').DataTable()
+			const modal_id = document.getElementById('product_modal')
 			this.modal = new bootstrap.Modal(modal_id)
 			modal_id.addEventListener('hidden.bs.modal', e => {
-				 this.$refs.user_modal.reset()				
+				 this.$refs.product_modal.reset()				
 			})
 		},
-		editUser(user) {
-            this.user = user
+		editProduct(product) {
+            this.product = product
             this.openModal()
 		},
-		async deleteUser({ id }) {
+		async deleteProduct({ id }) {
             if(!await deleteMessage()) return
             try {
-                await axios.delete(`/users/${id}`)
+                await axios.delete(`/products/${id}`)
                 window.location.reload()
                 await successMessage({is_delete: true, reload: true})
             } catch (error) {

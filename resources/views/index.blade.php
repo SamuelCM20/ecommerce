@@ -4,8 +4,9 @@
             $count = 0;
         @endphp
         <div class="card my-3">
-            <div class="card-header">
+            <div class="card-header d-flex align-items-center">
                 {{ $cate->name }}
+                    <a href="{{route('categories.allProducts',$cate->id)}}" class="btn btn-outline-secondary ms-auto">Ver todo</a>
             </div>
             <div class="card-body d-flex flex-wrap justify-content-center">
                 @foreach ($products as $product)

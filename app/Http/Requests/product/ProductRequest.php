@@ -1,11 +1,21 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\product;
 
 use Illuminate\Foundation\Http\FormRequest;
 
 class ProductRequest extends FormRequest
 {
+
+    protected $rules = [
+        'name' => ['required', 'string'],
+        'details' => ['required', 'string'],
+        'price' => ['required', 'numeric'],
+        'shipping_cost' => ['numeric'],
+        'description' => ['nullable', 'string'],
+        'stock' => ['required', 'numeric'],
+        'category_id' => ['required', 'numeric']
+    ];
     
     public function authorize()
     {
@@ -15,17 +25,8 @@ class ProductRequest extends FormRequest
     
     public function rules()
     {
-        $rules = [
-            'name' => ['required', 'string'],
-            'details' => ['required', 'string'],
-            'price' => ['required', 'numeric'],
-            'shipping_cost' => ['numeric'],
-            'description' => ['nullable', 'string'],
-            'stock' => ['required', 'numeric'],
-            'category_id' => ['required', 'numeric']
-        ];
 
-        return $rules;
+        return $this->rules;
     }
 
     public function messages()

@@ -42,8 +42,8 @@
                             <li><a class="dropdown-item" href="{{route('users.profile')}}">Perfil</a></li>
                             @role('admin')
                             <li><a class="dropdown-item" href="{{route('users.index')}}">Usuarios</a></li>
-                            <li><a class="dropdown-item" href="#">Productos</a></li>
-                            <li><a class="dropdown-item" href="#">Categorias</a></li>
+                            <li><a class="dropdown-item" href="{{route('products.index')}}">Productos</a></li>
+                            <li><a class="dropdown-item" href="{{route('categories.index')}}">Categorias</a></li>
                             @endrole
                             <li>
                                 <hr class="dropdown-divider">

@@ -201,7 +201,7 @@ export default {
 			role: null,
 			back_errors: {},
 			file: null,
-			image_preview: '/storage/images/books/default.png',
+			image_preview: '/storage/images/users/default.png',
 		}
 	},
 	created() {
@@ -244,7 +244,7 @@ export default {
 			this.$parent.user = {}
 			this.back_errors
 			this.file = null
-			this.image_preview = '/storage/images/books/default.png'
+			this.image_preview = '/storage/images/users/default.png'
 			document.getElementById("file").value = ''
 			setTimeout(() => this.$refs.Form.resetForm(), 100 )}
 			
