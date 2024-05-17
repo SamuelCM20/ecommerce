@@ -1,17 +1,17 @@
 <template>
 	<div class="card">
 		<div class="card-header d-flex justify-content-end">
-			<button class="btn btn-primary" @click="openModal">Crear Usuarios</button>
+			<button class="btn btn-success" @click="openModal">Crear Usuarios</button>
 		</div>
 		<div class="card-body">
 			<div class="table-responsive my-4 mx-2">
-				<table class="table table-bordered" id="user_table">
+				<table class="table table-bordered text-aling-center" id="user_table">
 					<thead>
 						<tr>
+							<th>Avatar</th>
 							<th>Cedula</th>
 							<th>Nombre</th>
 							<th>Apellido</th>
-							<th>Celular</th>
 							<th>Correo</th>
 							<th>Rol</th>
 							<th>Acciones</th>
@@ -19,10 +19,10 @@
 					</thead>
 					<tbody>
 						<tr v-for="(user, index) in users" :key="index">
+							<td class="d-flex justify-content-center"><img :src ="user.file.route" alt="avatar de usuario" width="80"></td>
 							<td>{{user.number_id}}</td>
 							<td>{{user.name}}</td>
 							<td>{{user.last_name}}</td>
-							<td>{{user.phone}}</td>
 							<td>{{user.email}}</td>
 							<td>
 								<span v-for="(role, roleIndex) in user.roles" :key="roleIndex">

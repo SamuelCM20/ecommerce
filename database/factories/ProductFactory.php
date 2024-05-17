@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\File;
+use App\Models\Product;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ProductFactory extends Factory
@@ -18,5 +20,13 @@ class ProductFactory extends Factory
             'stock' => $this->faker->numberBetween(1, 100),
             'category_id' => $this->faker->numberBetween(1, 3),
         ];
+    }
+
+    public function configure()
+    {
+        return $this->afterCreating(function (Product $product) {
+            $file = new File(['route' => '/storage/images/products/default.png']);
+            $product->file()->save($file);
+        });
     }
 }

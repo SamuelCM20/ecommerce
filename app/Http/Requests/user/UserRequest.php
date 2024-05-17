@@ -1,12 +1,23 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\user;
 
 use Illuminate\Foundation\Http\FormRequest;
 
 class UserRequest extends FormRequest
 {
 
+    protected $rules = [
+        'name' => ['required', 'string'],
+        'last_name' => ['required', 'string'],
+        'number_id' => ['required', 'numeric', 'unique:users,number_id'],
+        'phone' => ['required', 'numeric'],
+        'address' => ['required', 'string'],
+        'email' => ['required', 'email', 'unique:users,email'],
+        'password' => ['required', 'confirmed', 'string', 'min:8'],
+        'file' => ['required', 'image']
+        
+    ];
     public function authorize()
     {
         return true;
@@ -15,27 +26,10 @@ class UserRequest extends FormRequest
 
     public function rules()
     {
-
-        $rules = [
-            'name' => ['required', 'string'],
-            'last_name' => ['required', 'string'],
-            'number_id' => ['required', 'numeric', 'unique:users,number_id'],
-            'phone' => ['required', 'numeric'],
-            'address' => ['required', 'string'],
-            'email' => ['required', 'email', 'unique:users,email'],
-            'password' => ['required', 'confirmed', 'string', 'min:8']
-        ];
-
-        if ($this->method() == 'PUT') {
-            $rules['number_id'] = ['required', 'numeric', 'unique:users,number_id,' . $this->user->id];
-            $rules['email'] = ['required', 'email', 'unique:users,email,' . $this->user->id];
-            $rules['password'] = ['nullable', 'confirmed', 'string', 'min:8'];
-        }
-
         if($this->path() != 'api/register'){
-             $rules['role'] = ['required', 'string','in:user,admin'];
+            $rules['role'] = ['required', 'string','in:user,admin'];
         }
-        return $rules;
+        return $this->rules;
     }
 
     public function messages()
@@ -62,6 +56,8 @@ class UserRequest extends FormRequest
             'role.required' => 'El rol es requerido',
             'role.string' => 'El rol debe ser valido',
             'role.in' => 'El rol debe ser user o admin',
+            'file.required' => 'La imagen es requerida',
+            'file.image' => 'La imagen debe ser una imagen',
         ];
     }
 }

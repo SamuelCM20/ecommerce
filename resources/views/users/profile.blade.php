@@ -7,7 +7,7 @@
 							<div class="card-body text-center ">
 								<form id="form" action="" method="POST" enctype="multipart/form-data">
 									<div class="imageContent mb-4">
-										<img src="https://image.winudf.com/v2/image1/Y29tLnJhbmlhYXBwcy5hbmltZXByb2ZpbGVwaWN0dXJlX3NjcmVlbl8wXzE2ODM0ODYxMTBfMDUy/screen-0.jpg?fakeurl=1&type=.jpg" alt="Producto" class="img-fluid rounded-circle" width="170" height="170">
+										<img src="{{$userWithFile->file->route}}" class="rounded-circle" width="200" height="200">
 									</div>
 									<div class="imageFile d-flex">
 										<p class="card-text">Cambiar Foto:</p>

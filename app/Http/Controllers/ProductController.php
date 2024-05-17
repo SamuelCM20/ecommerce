@@ -13,7 +13,7 @@ class ProductController extends Controller
     public function home(Request $request)
     {
         $categories = Category::has('products')->get();
-        $products = Product::with('category')
+        $products = Product::with('category','file')
             ->whereHas('category')
             ->where('stock', '>', 0)
             ->get();

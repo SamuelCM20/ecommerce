@@ -34,7 +34,7 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdown"
                             role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="" alt="" width="30" height="30"
+                            <img src="{{Auth::user()->file->route}}" alt="avatar-user" width="30" height="30"
                                 class="d-inline-block align-text-top rounded-circle me-1">
                             {{ Auth::user()->name }}
                         </a>

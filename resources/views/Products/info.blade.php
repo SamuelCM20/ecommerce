@@ -11,7 +11,7 @@
                                 enctype="multipart/form-data">
                                 <div class="marcoProfile">
 
-                                    <img src="https://www.elfinanciero.com.mx/resizer/pUaic6VGqFu3Tn5eoOoMxz6zvm8=/1440x810/filters:format(jpg):quality(70)/cloudfront-us-east-1.images.arcpublishing.com/elfinanciero/SGE374VQNVALPFRXLETRON7CZA.jpg" alt="Producto" class="img-fluid rounded">
+                                    <img src="{{$product->file->route}}" alt="Producto" class="img-fluid rounded" width="300" height="300">
                                 </div>
                                 
 								<h1 class="h3 my-3">Descripicion:</h1>

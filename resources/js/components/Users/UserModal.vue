@@ -7,7 +7,7 @@
 					<h5 class="modal-title">{{ is_create ? 'Crear' : 'Editar' }} Usuario</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
-				<!-- <backend-error :errors="back_errors"/> -->
+				<backend-error :errors="back_errors"/>
 
 				<!-- Formulario -->
 				<Form ref="Form" @submit="saveUser" :validation-schema="schema">
@@ -15,19 +15,19 @@
 						<section class="row">
 
 							<!-- Image -->
-							<!-- <div class="col-12 d-flex justify-content-center mt-1">
-								<img :src="image_preview" alt="Imagen Libro" class="img-thumbnail" width="170" height="170">
-							</div> -->
+							<div class="col-12 d-flex justify-content-center mt-1">
+								<img :src="image_preview" alt="Avatar Usuario" class="img-thumbnail " width="170" height="170">
+							</div>
 
 							<!-- Load Image -->
-							<!-- <div class="col-12 mt-1 ">
+							<div class="col-12 mt-1 ">
 								<label for="file" class="form-label">Imagen</label>
 								<input type="file" :class="`form-control ${back_errors['file'] ? 'is-invalid' : ''}`"
 									id="file" accept="image/*" @change="previewImage">
 								<span class="invalid-feedback" v-if="back_errors['file']">
 									{{ back_errors['file'] }}
 								</span>
-							</div> -->
+							</div>
 
 							<!-- number_id -->
 							<div class="col-12 mt-2">
@@ -36,6 +36,7 @@
 									<input type="number" id="title" v-model="user.number_id" :class="`form-control ${errorMessage ? 'is-invalid' : ''}`" v-bind="field">
 
 									<span class="invalid-feedback">{{errorMessage}}</span>
+									<span class="invalid-feedback">{{ back_errors['file'] }}</span>
 
 								</Field>
 							</div>
@@ -46,6 +47,7 @@
 								<Field name="name" v-slot="{ errorMessage, field}" v-model="user.name">
 									<input type="text" id="name" v-model="user.name" :class="`form-control ${errorMessage ? 'is-invalid' : ''}`" v-bind="field">
 									<span class="invalid-feedback">{{errorMessage}}</span>
+									<span class="invalid-feedback">{{ back_errors['name'] }}</span>
 
 								</Field>
 							</div>
@@ -56,6 +58,7 @@
 								<Field name="last_name" v-slot="{ errorMessage, field}" v-model="user.last_name">
 									<input type="text" id="last_name" v-model="user.last_name" :class="`form-control ${errorMessage ? 'is-invalid' : ''}`" v-bind="field">
 									<span class="invalid-feedback">{{errorMessage}}</span>
+									<span class="invalid-feedback">{{ back_errors['last_name'] }}</span>
 
 								</Field>
 							</div>
@@ -66,6 +69,7 @@
 								<Field name="phone" v-slot="{ errorMessage, field}" v-model="user.phone">
 									<input type="number" id="phone" v-model="user.phone" :class="`form-control ${errorMessage ? 'is-invalid' : ''}`" v-bind="field">
 									<span class="invalid-feedback">{{errorMessage}}</span>
+									<span class="invalid-feedback">{{ back_errors['phone'] }}</span>
 								</Field>
 							</div>
 
@@ -75,6 +79,7 @@
 								<Field name="address" v-slot="{ errorMessage, field}" v-model="user.address">
 									<input type="text" id="address" v-model="user.address" :class="`form-control ${errorMessage ? 'is-invalid' : ''}`" v-bind="field">
 									<span class="invalid-feedback">{{errorMessage}}</span>
+									<span class="invalid-feedback">{{ back_errors['address'] }}</span>
 
 								</Field>
 							</div>
@@ -85,6 +90,7 @@
 								<Field name="email" v-slot="{ errorMessage, field}" v-model="user.email">
 									<input type="text" id="email" v-model="user.email" :class="`form-control ${errorMessage ? 'is-invalid' : ''}`" v-bind="field">
 									<span class="invalid-feedback">{{errorMessage}}</span>
+									<span class="invalid-feedback">{{ back_errors['email'] }}</span>
 
 								</Field>
 							</div>
@@ -95,6 +101,7 @@
 								<Field name="password" v-slot="{ errorMessage, field}" v-model="user.password">
 									<input type="password" id="password" v-model="user.password" :class="`form-control ${errorMessage ? 'is-invalid' : ''}`" v-bind="field">
 									<span class="invalid-feedback">{{errorMessage}}</span>
+									<span class="invalid-feedback">{{ back_errors['password'] }}</span>
 
 								</Field>
 							</div>
@@ -104,6 +111,7 @@
 								<Field name="password_confirmation" v-slot="{ errorMessage, field}" v-model="user.password_confirmation">
 									<input type="password" id="password_confirmation"  v-model="user.password_confirmation" :class="`form-control ${errorMessage ? 'is-invalid' : ''}`" v-bind="field">
 									<span class="invalid-feedback">{{errorMessage}}</span>
+									<span class="invalid-feedback">{{ back_errors['password_confirmation'] }}</span>
 
 								</Field>
 							</div>
@@ -119,6 +127,7 @@
 									</v-select>
 
 									<span class="invalid-feedback">{{ errorMessage }}</span>
+									<span class="invalid-feedback">{{ back_errors['role'] }}</span>
 								</Field>
 							</div>
 
@@ -141,7 +150,7 @@
 import { Field, Form } from 'vee-validate'
 import * as yup from 'yup'
 import { successMessage, handlerErrors } from '@/helpers/Alert.js'
-// import BackendError from '../Components/BackendError.vue'
+import BackendError from '../Components/BackendError.vue'
 
 export default {
 	props: ['roles_data', 'user_data'],
@@ -152,7 +161,7 @@ export default {
             if (!this.user.id)return
 			this.is_create = false
 			this.role = this.user.roles[0].name			
-			//  this.image_preview = this.user.file.route
+			this.image_preview = this.user.file.route
 			
 		}
 	},
@@ -189,7 +198,10 @@ export default {
 		return {
 			is_create: true,
 			user: {},
-			role: null
+			role: null,
+			back_errors: {},
+			file: null,
+			image_preview: '/storage/images/books/default.png',
 		}
 	},
 	created() {
@@ -197,19 +209,32 @@ export default {
 	},
 
 	methods: {
-		index() {
-			
+		index() {},
+		previewImage(event) {
+			this.file = event.target.files[0]
+            this.image_preview = URL.createObjectURL(this.file)
 		},
 		async saveUser() {
 			try {
-				this.user.role = this.role;
-				this.user.password_confirmation = this.user.password_confirmation ;
-				if(this.is_create) await axios.post('/users/store', this.user)
-					else await axios.put(`/users/update/${this.user.id}`, this.user)
+				this.user.role = this.role
+				this.user.password_confirmation = this.user.password_confirmation 
+				const user = this.createFormData(this.user)
+				if(this.is_create) await axios.post('/users/store', user)
+				else await axios.post(`/users/update/${this.user.id}`, user)
 					await successMessage({ reload: true })
 			} catch (error) {
-				console.error(error.response.data.errors) 
+				this.back_errors = await handlerErrors(error)
 			}
+		},
+		createFormData(data){
+			const form_data = new FormData()
+			if(this.file)form_data.append('file', this.file, this.file.name )
+			form_data.append('name', this.user.name)
+			for (const prop in data) {
+				form_data.append(prop, data[prop])
+				
+			}
+			return form_data
 		},
 		
 		reset(){
@@ -217,10 +242,10 @@ export default {
 			this.user = {}
 			this.role = null
 			this.$parent.user = {}
-			// this.back_errors
-			// this.file = null
-			// this.image_preview = '/storage/images/books/default.png'
-			// document.getElementById("file").value = ''
+			this.back_errors
+			this.file = null
+			this.image_preview = '/storage/images/books/default.png'
+			document.getElementById("file").value = ''
 			setTimeout(() => this.$refs.Form.resetForm(), 100 )}
 			
 

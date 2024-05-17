@@ -2,26 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UserRequest;
+use App\Http\Requests\user\UserRequest;
+use App\Http\Requests\user\UserUpdateRequest;
+use App\Http\Traits\UploadFile;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
+    use UploadFile;
 
     public function index(Request $request)
     {
         $roles = Role::get();
-        $users = User::with('roles')->get();
+        $users = User::with('roles', 'file')->get();
         if (!$request->ajax()) return view('users.index', compact('users', 'roles'));
         return response()->json(['users' => $users], 200); //view
     }
     public function profile()
     {
         $user = Auth::user();
-        return view('users.profile', compact('user'));
+        $userWithFile = User::with('file')->find($user->id);
+        return view('users.profile', compact('user', 'userWithFile'));
     }
 
     public function show(Request $request, User $user)
@@ -32,37 +37,47 @@ class UserController extends Controller
 
     public function store(UserRequest $request)
     {
-        $user = new User($request->all());
-        $user->save();
-        $user->assignRole($request->role);
-        if (!$request->ajax()) return back()->with("success", 'User created');
-        return response()->json(['status' => 'User created'], 201);
-    }
-
-
-    
-    public function edit($id)
-    {
-        //
-    }
-
-
-    public function update(UserRequest $request, User $user)
-    {
-        $data = $request->all();
-        if (!$request->filled('password')) {
-            unset($data['password'], $data['password_confirmation']);
+        try {
+            DB::beginTransaction();
+            $user = new User($request->all());
+            $user->save();
+            $this->uploadFile($user, $request);
+            $user->assignRole($request->role);
+            DB::commit();
+            if (!$request->ajax()) return back()->with("success", 'User created');
+            return response()->json(['status' => 'User created'], 201);
+        } catch (\Throwable $th) {
+            DB::rollback();
         }
-        $user->update($data);
-        // $user->syncRoles([$request->role]);
-        if (!$request->ajax()) return back()->with("success", 'User updated');
-        return response()->json([], 204);
+    }
+
+    public function update(UserUpdateRequest $request, User $user)
+    {
+        try {
+            DB::beginTransaction();
+            $data = $request->all();
+            if (!$request->filled('password')) {
+                unset($data['password'], $data['password_confirmation']);
+            }
+            if (!$request->filled('file')) {
+                unset($data['file']);
+            }
+            $user->update($data);
+            $this->uploadFile($user, $request);
+            $user->syncRoles([$request->role]);
+            DB::commit();
+            if (!$request->ajax()) return back()->with("success", 'User updated');
+            return response()->json([], 204);
+        } catch (\Throwable $th) {
+            DB::rollback();
+        }
     }
 
 
     public function destroy(Request $request, User $user)
     {
         $user->delete();
+        $this->deleteFile($user);
         if (!$request->ajax()) return back()->with("success", 'User deleted');
         return response()->json([], 204);
     }

@@ -29,6 +29,8 @@ class Product extends Model
     {
         return $this->hasMany(Cart::class, 'product_id', 'id');
     }
+    public function file()
+    {
+        return $this->morphOne(File::class, 'fileable');
+    }
 }
-
-

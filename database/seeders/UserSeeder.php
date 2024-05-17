@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\File;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -22,7 +23,9 @@ class UserSeeder extends Seeder
             'password' => 'samuel123',
             'remember_token' => Str::random(10),
         ]);
-        $user->assignRole('admin');
         $user->save();
+        $user->assignRole('admin');
+        $file = new File(['route' => '/storage/images/users/default.png']);
+        $user->file()->save($file);
     }
 }
