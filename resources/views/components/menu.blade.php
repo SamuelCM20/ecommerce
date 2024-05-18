@@ -62,7 +62,7 @@
 
                
                 <li class="nav-item" title="cart">
-                    <a class="nav-link" href="">
+                    <a class="nav-link" href="{{route('products.cart')}}">
                         <i class="fa-solid fa-cart-shopping fs-4"></i></a>
                     </li>
                     

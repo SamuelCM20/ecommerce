@@ -51,15 +51,16 @@ class ProductController extends Controller
     }
 
 
-    public function show(Request $request, Product $product)
+    public function cart()
     {
-        if (!$request->ajax()) return view();
-        return response()->json(['product' => $product], 200);
+       return view('cart.index');
     }
 
     public function info(Product $product)
     {
-        return view('products.info', compact('product'));
+        $product->load('file');
+        $session = auth()->check();
+        return view('products.info', compact('product','session'));
     }
 
     public function update(ProductUpdateRequest $request, Product $product)

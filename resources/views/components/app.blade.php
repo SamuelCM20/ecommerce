@@ -27,6 +27,22 @@
 
 		</main>
 	</div>
-	
+
+<footer class="bg-dark text-white mt-5 p-14">
+    <div class="container">
+		<div class="row">
+			<div class="col-sm-6">
+                <p class="text-center">
+                    <b>Tienda Virtual Colombia</b>
+                </p>
+            </div>
+            <div class="col-sm-6">
+                <p class="text-center">
+                    <b>Todos los derechos reservados</b>
+                </p>
+            </div>
+        </div>
+</footer>	
 </body>
+<script src="{{ asset('js/localStorageUtils.js') }}"></script>
 </html>
