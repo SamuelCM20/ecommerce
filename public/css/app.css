@@ -1,0 +1,35 @@
+:root{
+
+	--main-color:  #d90429;
+	--secondary-color: #2b2d42;
+	--content-color: #edf2f4;
+	--white-mode: #F1F0F3;
+}
+
+
+
+#footer-body{
+	background: var(--secondary-color); 
+	color: var(--content-color);
+}
+
+
+.fa-brands{
+	color: var(--content-color)!important;
+}
+
+.cuerpo{
+	background: var(--content-color);
+}
+
+#menu{
+	background: var(--main-color) !important;
+	color: var(--content-color) !important;
+}
+
+#menu a:not(.dropdown-item) {
+	color: var(--content-color) !important;
+}
+
+
+

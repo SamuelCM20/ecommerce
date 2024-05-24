@@ -76,7 +76,8 @@
 
 <script>
 	import { ref, onMounted } from "vue";
-	import { addObject } from "@/helpers/LocalStorage";
+    import { addObject } from "@/helpers/LocalStorage";
+	
 	export default {
 		props: ["product", "session", "user"],
 		setup(props) {
@@ -94,12 +95,8 @@
 					props.product.quantity = 1;
 					props.product.subtotal = props.product.price;
 
-					let objectData = {
-						user: user_data.value.id,
-						product: props.product.id,
-					};
-
-					addObject(props.product, objectData);
+					const key = `${user_data.value.id}-${props.product.id}`;
+					addObject(key, props.product);
 					window.location.href = "/cart";
 
 				}

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\user\UserRequest;
 use App\Http\Requests\user\UserUpdateRequest;
 use App\Http\Traits\UploadFile;
+use App\Models\File;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -37,17 +38,30 @@ class UserController extends Controller
 
     public function store(UserRequest $request)
     {
+        $Isfile = true;
+        if (!$request->hasFile('file')) {
+            unset($request['file']);
+            $Isfile = false;
+        };
+
         try {
             DB::beginTransaction();
             $user = new User($request->all());
             $user->save();
-            $this->uploadFile($user, $request);
-            $user->assignRole($request->role);
+            $user->syncRoles([$request->role]);
+
+            if (!$Isfile) {
+                $file = new File(['route' => '/storage/images/users/default.png']);
+                $user->file()->save($file);
+            } else {
+                $this->uploadFile($user, $request);
+                $user->save();
+            }
             DB::commit();
-            if (!$request->ajax()) return back()->with("success", 'User created');
-            return response()->json(['status' => 'User created'], 201);
+            return response()->json([], 200);
         } catch (\Throwable $th) {
             DB::rollback();
+            throw $th;
         }
     }
 
@@ -56,13 +70,11 @@ class UserController extends Controller
         try {
             DB::beginTransaction();
             $data = $request->all();
-            if (!$request->filled('password')) {
-                unset($data['password'], $data['password_confirmation']);
-            }
             $user->update($data);
             if ($request->hasFile('file')) {
                 $this->uploadFile($user, $request);
             }
+            if (!$request->filled('password')) unset($data['password'], $data['password_confirmation']);
             $user->syncRoles([$request->role]);
             DB::commit();
             if (!$request->ajax()) return back()->with("success", 'User updated');
@@ -80,4 +92,5 @@ class UserController extends Controller
         if (!$request->ajax()) return back()->with("success", 'User deleted');
         return response()->json([], 204);
     }
+
 }

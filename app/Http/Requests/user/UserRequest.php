@@ -14,9 +14,7 @@ class UserRequest extends FormRequest
         'phone' => ['required', 'numeric'],
         'address' => ['required', 'string'],
         'email' => ['required', 'email', 'unique:users,email'],
-        'password' => ['required', 'confirmed', 'string', 'min:8'],
-        'file' => ['required', 'image']
-        
+        'password' => ['required', 'confirmed', 'string', 'min:8'],        
     ];
     public function authorize()
     {
@@ -28,6 +26,12 @@ class UserRequest extends FormRequest
     {
         if($this->path() != 'api/register'){
             $rules['role'] = ['required', 'string','in:user,admin'];
+        }
+
+        $this->rules['file'] = ['nullable', 'image'];
+
+        if (!$this->hasFile('file')) {
+            $this->rules['file'] = ['nullable'];
         }
         return $this->rules;
     }

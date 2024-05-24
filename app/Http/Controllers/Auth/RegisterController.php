@@ -3,34 +3,39 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UserRequest;
+use App\Http\Requests\user\UserRequest;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
+use Spatie\Permission\Models\Role;
+use  App\Http\Requests\user\RegisterRequest;
+use App\Http\Traits\UploadFile;
+use App\Models\File;
 
 class RegisterController extends Controller
 {
-    
 
     use RegistersUsers;
 
-    
+
+
     protected $redirectTo = RouteServiceProvider::HOME;
 
-    
+
     public function __construct()
     {
         $this->middleware('guest');
     }
-    
-    protected function register(UserRequest $request)
+
+    protected function register(RegisterRequest $request)
     {
         $user = new User($request->all());
         $user->save();
-        $user->assingRole('user');
+        $user->assignRole('user');
+
+        $file = new File(['route' => '/storage/images/users/default.png']);
+        $user->file()->save($file);
         Auth::login($user);
         return redirect($this->redirectPath());
     }

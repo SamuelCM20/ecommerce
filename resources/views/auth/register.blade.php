@@ -9,6 +9,7 @@
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
                         <div class="row mb-3 d-flex">
+
                             <label for="number_id" class="col-md-4 col-form-label text-md-end">{{ __('Cedula') }}</label>
 
                             <div class="col-md-6">

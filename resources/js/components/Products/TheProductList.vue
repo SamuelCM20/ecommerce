@@ -1,7 +1,7 @@
 <template>
 	<div class="card">
 		<div class="card-header d-flex justify-content-end">
-			<button class="btn btn-success" @click="openModal">Crear Usuarios</button>
+			<button class="btn btn-success" @click="openModal">Crear Producto</button>
 		</div>
 		<div class="card-body">
 			<div class="table-responsive my-4 mx-2">

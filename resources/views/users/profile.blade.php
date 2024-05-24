@@ -4,14 +4,10 @@
 				<div class="row">
 					<div class="col-sm-5">
 						<div class="card mb-1 shadow-sm" style="border-top:solid rgba(44, 62, 80, 0.8)  4px">
-							<div class="card-body text-center ">
+							<div class="card-body text-center d-flex m-auto ">
 								<form id="form" action="" method="POST" enctype="multipart/form-data">
 									<div class="imageContent mb-4">
 										<img src="{{$userWithFile->file->route}}" class="rounded-circle" width="200" height="200">
-									</div>
-									<div class="imageFile d-flex">
-										<p class="card-text">Cambiar Foto:</p>
-										<input type="file" name="image" id="image">
 									</div>
 								</form>
 							</div>

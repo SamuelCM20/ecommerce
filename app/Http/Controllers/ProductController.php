@@ -50,6 +50,14 @@ class ProductController extends Controller
         }
     }
 
+    public function search(Request $request)
+    {
+        $query = $request->input('buscador');
+        $result = Product::with('file')->where('name','like','%'. $query . '%')->get();
+        $count = count($result);
+       return view('products.search', compact('result','query','count'));
+    }
+
 
     public function cart()
     {

@@ -1,6 +1,5 @@
 <template>
 	<div class="d-flex gap-4 mx-4">
-		<li>
 			<ul v-for="(product, index) in products" :key="index" class="card d-flex">
 				<div class="card-body">
 					<div class="row">
@@ -20,21 +19,20 @@
 							<span class="mx-2">Remove</span>
 						</button>
 						<div>
-							<button class="btn" @click="decreaseProduct(product)"><i class="fas fa-minus"></i></button>
+							<button class="btn" @click="decrease(product)"><i class="fas fa-minus"></i></button>
 							<span>{{product.quantity}}</span>
-							<button class="btn" @click="increaseProduct(product)"><i class="fas fa-plus"></i></button>
+							<button class="btn" @click="increase(product)"><i class="fas fa-plus"></i></button>
 						</div>
 					</div>
 					</div>
 					</div>
 				</div>
 			</ul>
-		</li>
 		<div class="card h-100">
 			<div class="m-3">
 				<p><span class="text-success">Envio gratis despues de:</span>$100</p>
 				<p class="">Total: <span class="h4 mx-2"> ${{total}}</span></p>
-				<button class="btn btn-success" @click="buyAlert">Realizar compra</button>
+				<button class="btn btn-success" @click="Alert">Realizar compra</button>
 			</div>
 		</div>
 	</div>
@@ -44,7 +42,7 @@
 	import {
 		addObject,
 		getObject,
-		getObjects,
+		getProductsObject,
 		deleteObject,
 		addTotal,
 	} from "@/helpers/LocalStorage";
@@ -57,7 +55,7 @@
 	const products = ref([]);
 	const total = ref(0);
 
-	const decreaseProduct = (product) => {
+	const decrease = (product) => {
 		if (product.quantity > 1) {
 			let newQuantity = product.quantity - 1;
 			let newSubtotal = product.price * newQuantity;
@@ -65,11 +63,12 @@
 			product.quantity = newQuantity;
 			product.subtotal = newSubtotal;
 
-			addObject(product, product.id);
-			total.value = addTotal();
+			const key = `${user_data.value.id}-${product.id}`;
+			addObject(key, product);
+			total.value = addTotal(user_data.value.id);
 		}
 	};
-	const increaseProduct = (product) => {
+	const increase = (product) => {
 		if (product.stock > product.quantity) {
 			let newQuantity = product.quantity + 1;
 			let newSubtotal = product.price * newQuantity;
@@ -77,20 +76,23 @@
 			product.quantity = newQuantity;
 			product.subtotal = newSubtotal;
 
-			addObject(product, product.id);
-			total.value = addTotal();
+			const key = `${user_data.value.id}-${product.id}`;
+			addObject(key, product);
+			total.value = addTotal(user_data.value.id);
 		}
 	};
 
-	const removeProduct = (id) => {
-		deleteObject(id);
-		products.value = getObjects();
-		total.value = addTotal();
+	const removeProduct = (idProduct) => {
+		const key = `${user_data.value.id}-${idProduct}`;
+		deleteObject(key);
+
+		products.value = getProductsObject(user_data.value.id);
+		total.value = addTotal(user_data.value.id);
 	};
 
-	const buyAlert = () => {
+	const Alert = () => {
 		Swal.fire({
-			title: "¡Aún no está disponible!",
+			title: "En proceso...",
 			confirmButtonColor: "#496",
 		});
 	};
@@ -100,8 +102,8 @@
 		try {
 			
 			user_data.value = props.user;
-			products.value = getObjects();
-			total.value = addTotal();
+			products.value = getProductsObject(user_data.value.id);
+			total.value = addTotal(user_data.value.id);
 		} catch (error) {
 			console.log(error);
 		}

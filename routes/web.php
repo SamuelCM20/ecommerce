@@ -10,8 +10,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Auth::routes();
+
 Route::get('/', [ProductController::class, 'home'])->name('products.home');
-Route::get('/info/{product}',[ProductController::class, 'info'],'info')->name('products.info');
+Route::get('/info/{product}',[ProductController::class, 'info'])->name('products.info');
+Route::get('/search',[ProductController::class, 'search'])->name('products.search');
 
 
 Route::group(['middleware' => ['auth']], function () {
