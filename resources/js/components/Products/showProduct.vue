@@ -92,15 +92,31 @@
 					window.location.href = "/login";
 					
 				} else {
-					props.product.quantity = 1;
-					props.product.subtotal = props.product.price;
-
 					const key = `${user_data.value.id}-${props.product.id}`;
-					addObject(key, props.product);
-					window.location.href = "/cart";
 
+					const isExist = localStorage.getItem(key)
+					
+					if (!isExist) {
+						props.product.quantity = 1;
+						props.product.subtotal = props.product.price;						
+						addObject(key, props.product);
+					} else {
+						const product = JSON.parse(isExist)
+						increaseProduct(product)
+					}
+
+					window.location.href = "/cart";
+						
 				}
 			};
+			const increaseProduct = (product) => {
+				product.quantity += 1;
+				product.subtotal = product.price * product.quantity;
+
+				const key = `${user_data.value.id}-${product.id}`;
+
+				addObject(key, product);
+			}
 			return { validarSesion };
 		},
 	};

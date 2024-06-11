@@ -15,7 +15,7 @@
 								<h3 class="card-text">${{ $product->price }}.</h3>
 							</div>
 							<div class="card-footer d-flex m-auto">
-								<a href="#" class="btn btn-success">Añadir al carrito</a>
+								<p class="cart-text">Ver mas</p>
 							</div>
 						</div>
 					</a>
