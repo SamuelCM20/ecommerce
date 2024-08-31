@@ -14,6 +14,7 @@ Auth::routes();
 Route::get('/', [ProductController::class, 'home'])->name('products.home');
 Route::get('/info/{product}',[ProductController::class, 'info'])->name('products.info');
 Route::get('/search',[ProductController::class, 'search'])->name('products.search');
+Route::get('/allProducts/{category}',[CategoryController::class, 'allProducts'])->name('categories.allProducts');
 
 
 Route::group(['middleware' => ['auth']], function () {
@@ -40,7 +41,6 @@ Route::group(['prefix' => 'products','controller'=>ProductController::class], fu
 
 Route::group(['prefix' => 'categories','controller'=>CategoryController::class], function () {
 	Route::get('/','index')->name('categories.index')->middleware('can:categories.index');
-	Route::get('/allProducts/{category}','allProducts')->name('categories.allProducts');
 	Route::post('/', 'store')->name('categories.store')->middleware('can:categories.store');
 	Route::put('/{category}', 'update')->name('categories.update')->middleware('can:categories.update');
 	Route::delete('/{category}', 'destroy')->name('categories.destroy')->middleware('can:categories.destroy');

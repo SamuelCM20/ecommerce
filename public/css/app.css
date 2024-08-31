@@ -30,6 +30,34 @@
 #menu a:not(.dropdown-item) {
 	color: var(--content-color) !important;
 }
+.slider{
+	overflow: hidden;
+}
+.slider--inner{
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	transition: all 0.3s ease-in;
+	align-items: center; 
+}
 
+.slider--inner img{
+width: 100%;
+aspect-ratio: 25/9 !important;
+object-fit: cover !important;
+}
 
+.returnLeft{
+	top: 50%;
+	width: 60px;
+	left: 0;
+	right: unset;
+}
+
+.returnRight{
+	top: 50%;
+	width: 60px;
+	left: unset;
+	right: 0;
+}
 

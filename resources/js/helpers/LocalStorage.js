@@ -1,4 +1,4 @@
-export const getProductsObject = user_id => {
+export const getProductsObject = user_id => {//obtiene 
 	let data = []
 	for (let i = 0; i < localStorage.length; i++) {
 		let clave = localStorage.key(i)

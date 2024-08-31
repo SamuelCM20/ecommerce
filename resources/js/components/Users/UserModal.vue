@@ -221,7 +221,7 @@ export default {
 				const user = this.createFormData(this.user)
 				if(this.is_create) await axios.post('/users/store', user)
 				else await axios.post(`/users/update/${this.user.id}`, user)
-					await successMessage({ reload: true })
+				await successMessage({ reload: true })
 			} catch (error) {
 				this.back_errors = await handlerErrors(error)
 			}

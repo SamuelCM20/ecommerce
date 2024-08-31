@@ -7,7 +7,7 @@
 		<div class="d-flex flex-wrap justify-content-center">
 		 	@foreach ($products as $product)
 					<a href="{{route('products.info',$product->id)}}" class="text-decoration-none text-reset">
-						<div class="card mx-2 my-2" style="width: 15rem;">
+						<div class="card mx-2 my-2" style="width: 15rem; height: 29rem;">
 							<img src="{{$product->file->route}}" class="card-img-top" alt="imagen-producto" width="150" height="250">
 							<div class="card-body">
 								<h2 class="card-title h5"><b>{{ $product->name }}</b></h2>

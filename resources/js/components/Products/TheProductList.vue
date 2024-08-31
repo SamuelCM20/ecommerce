@@ -8,6 +8,7 @@
 				<table class="table table-bordered text-aling-center" id="product_table">
 					<thead>
 						<tr>
+							
 							<th>Imagen</th>
 							<th>Nombre</th>
 							<th>detalles</th>

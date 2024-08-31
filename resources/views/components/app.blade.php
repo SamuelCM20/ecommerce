@@ -27,6 +27,8 @@
 			{{ $slot}}
 
 		</main>
+        <script src="{{ asset('js/slider.js') }}"></script>
+		
 	</div>
 
 	<footer class="bg-body-tertiary text-center text-lg-start">

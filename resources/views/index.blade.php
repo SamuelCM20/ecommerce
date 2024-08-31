@@ -1,10 +1,20 @@
 <x-app title="Tienda electronica | home">
+
+    <div class="slider" >
+        <div class="slider--inner" id="slider--inner">
+            <img src="/storage/images/ecommerce/promocion/prom1.jpg" alt="promocion">
+            <img src="/storage/images/ecommerce/promocion/prom2.jpg" alt="promocion">
+            <img src="/storage/images/ecommerce/promocion/prom3.jpg" alt="promocion">
+        </div>
+        <button class="returnLeft position-absolute" id="back">hola</button>
+        <button class="returnRight position-absolute">adios</button>
+    </div>
     @foreach ($categories as $cate)
         @php
             $count = 0;
         @endphp
-        <div class=" my-4">
-            <div class="d-flex align-items-center mx-4 mb-2">
+        <div class=" my-4" style="margin: 0 4rem 0 4rem;">
+            <div class="d-flex align-items-center my-2">
                     <h1 class="h4">{{ $cate->name }}</h1>
                     <a href="{{route('categories.allProducts',$cate->id)}}" class="btn btn-outline-secondary ms-auto">Ver todo</a>
             </div>
@@ -32,4 +42,6 @@
             </div>
         </div>
     @endforeach
+
+
 </x-app>

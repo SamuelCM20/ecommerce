@@ -17,7 +17,7 @@
 	<div class="d-flex">
 		<button class="p-0 btn" @click="removeProduct(product.id)">
 			<i class="fas fa-trash"></i>
-		<span class="mx-2">Remove</span>
+		<span class="mx-2">quitar</span>
 	</button>
 <div>
 	<button class="btn" @click="decrease(product)"><i class="fas fa-minus"></i></button>
@@ -34,7 +34,7 @@
 			<div class="m-3">
 				<p><span class="text-success">Envio gratis despues de:</span>$100</p>
 				<p class="">Total: <span class="h4 mx-2"> ${{total}}</span></p>
-				<button class="btn btn-success" @click="Alert">Realizar compra</button>
+				<button class="btn btn-success">Realizar compra</button>
 			</div>
 		</div>
 	</div>
@@ -49,7 +49,7 @@
 		addTotal,
 	} from "@/helpers/LocalStorage";
 
-	import { ref, onMounted, computed } from "vue";
+	import { ref, onMounted} from "vue";
 
 	const props = defineProps(["user"]);
 
@@ -92,12 +92,6 @@
 		total.value = addTotal(user_data.value.id);
 	};
 
-	const Alert = () => {
-		Swal.fire({
-			title: "En proceso...",
-			confirmButtonColor: "#496",
-		});
-	};
 
 	const index = () => {
 

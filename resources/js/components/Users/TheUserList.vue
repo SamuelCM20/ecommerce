@@ -34,7 +34,7 @@
 
 									<button type="button" class="btn btn-warning btn-sm" @click="editUser(user)">
 										<i class="fa-solid fa-pen"></i></button>
-									<button type="button" class="btn btn-danger btn-sm ms-2" title="Eliminar" @click="deleteUser(user)" ><i class="fa-solid fa-trash"></i></button>
+										<button type="button" class="btn btn-danger btn-sm ms-2" title="Eliminar" @click="deleteUser(user)" ><i class="fa-solid fa-trash"></i></button>
 								</div>
 
 							</td>							
